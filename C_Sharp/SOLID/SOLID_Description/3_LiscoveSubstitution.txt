@@ -1,0 +1,104 @@
+using System;
+
+// Liskov Substitution Principle (LSP)
+
+// Base class (Parent)
+public abstract class Bird
+{
+    public abstract void Fly();
+
+    public virtual void Eat()
+    {
+        Console.WriteLine("Bird is eating.");
+    }
+}
+
+// Derived class (Child) - Obeys LSP
+public class Eagle : Bird
+{
+    public override void Fly()
+    {
+        Console.WriteLine("Eagle is flying high.");
+    }
+
+    public override void Eat()
+    {
+        Console.WriteLine("Eagle is eating prey.");
+    }
+}
+
+// Derived class (Child) - Violates LSP!
+public class Ostrich : Bird // Ostrich cannot fly
+{
+    public override void Fly()
+    {
+        // This violates LSP because Ostrich can't fly.  
+        // We shouldn't throw an exception here. It breaks the expected behavior.
+        // Instead, we might want to rethink the inheritance or use a different approach.
+
+        Console.WriteLine("Ostrich cannot fly."); // Better approach than throwing an exception
+        // Or throw a NotImplementedException if the method is not meant to be called.
+        // throw new NotImplementedException("Ostrich cannot fly."); 
+    }
+
+    public override void Eat()
+    {
+        Console.WriteLine("Ostrich is eating plants.");
+    }
+}
+
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // LSP in action:  We can use an Eagle where a Bird is expected
+        Bird myBird = new Eagle();
+        myBird.Fly(); // Output: Eagle is flying high.
+        myBird.Eat(); // Output: Eagle is eating prey.
+
+
+        // LSP Violation Example (Illustrative - but shows the problem)
+        Bird anotherBird = new Ostrich();
+        anotherBird.Fly(); // Output: Ostrich cannot fly. (This is now acceptable)
+        anotherBird.Eat(); // Output: Ostrich is eating plants.
+
+        // Demonstrating why throwing exception is bad.
+        // What if you had a function that operated on a list of birds:
+        List<Bird> birds = new List<Bird> { new Eagle(), new Ostrich(), new Eagle() };
+
+        foreach(Bird b in birds)
+        {
+            try
+            {
+                b.Fly(); // If Ostrich.Fly() threw exception, this loop could terminate unexpectedly
+                b.Eat();
+            }
+            catch(NotImplementedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+}
+
+Explanation of LSP and the Example:
+
+The Liskov Substitution Principle states that if you have a class (subclass/derived class) that inherits from another class (base/parent class), you should be able to use objects of the derived class anywhere you can use objects of the base class without altering the correctness of the program.  In simpler terms, a subclass should be substitutable for its base class.
+
+The Problem (and how the code avoids it):
+
+The classic example of LSP violation is a Rectangle and Square.  A Square is a Rectangle mathematically, but if your code relies on the fact that you can set the width and height independently on a Rectangle, then substituting a Square (where width and height are always the same) will break your code.
+
+In the Bird example, if Ostrich.Fly() threw an exception, it would violate LSP.  Code that expected to be able to call Fly() on any Bird would suddenly break when given an Ostrich.
+
+How the code adheres to LSP (or at least handles the issue):
+
+The Ostrich class's Fly() method doesn't throw an exception.  Instead, it prints a message indicating that the ostrich cannot fly.  This is a much better approach. Now, code that works with a Bird can also work with an Ostrich without unexpected exceptions.
+
+Key Takeaways:
+
+Don't throw exceptions in derived classes if the base class's method doesn't. This is a frequent cause of LSP violations.
+Think about the expected behavior. If a subclass can't fulfill the contract of the base class, you might need to rethink your inheritance hierarchy or use a different design pattern (like composition). Sometimes, inheritance isn't the right solution.
+LSP is about behavior, not just types. Even if a subclass "is a" kind of base class, if its behavior is different in a way that breaks existing code, you've violated LSP.
+This improved example demonstrates the core principles of LSP and how to avoid violating it.  It also shows why simply throwing an exception is not a good solution.  Handling the inability to fly gracefully (e.g., with a message or by using a more appropriate design) is key to adhering to LSP.

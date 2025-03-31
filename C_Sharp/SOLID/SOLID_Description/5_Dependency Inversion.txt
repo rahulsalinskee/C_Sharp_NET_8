@@ -1,0 +1,183 @@
+// Violating Dependency Inversion Principle (High-level depends on low-level)
+
+// public class Button
+// {
+//     private Lamp _lamp; // Tight coupling to Lamp
+
+//     public Button(Lamp lamp)
+//     {
+//         _lamp = lamp;
+//     }
+
+//     public void Press()
+//     {
+//         _lamp.TurnOn(); // Button directly controls the Lamp
+//     }
+// }
+
+// public class Lamp
+// {
+//     public void TurnOn()
+//     {
+//         Console.WriteLine("Lamp is on.");
+//     }
+// }
+
+
+
+// Applying Dependency Inversion Principle (High-level doesn't depend on low-level)
+
+// Define an interface for the switchable device
+public interface ISwitchable
+{
+    void TurnOn();
+    void TurnOff(); // Added TurnOff for completeness
+}
+
+public class Button
+{
+    private ISwitchable _device; // Now depends on the interface
+
+    public Button(ISwitchable device)
+    {
+        _device = device;
+    }
+
+    public void Press()
+    {
+        _device.TurnOn();
+    }
+}
+
+public class Lamp : ISwitchable
+{
+    public void TurnOn()
+    {
+        Console.WriteLine("Lamp is on.");
+    }
+
+    public void TurnOff()
+    {
+        Console.WriteLine("Lamp is off.");
+    }
+}
+
+public class Fan : ISwitchable  // New device type
+{
+    public void TurnOn()
+    {
+        Console.WriteLine("Fan is on.");
+    }
+
+    public void TurnOff()
+    {
+        Console.WriteLine("Fan is off.");
+    }
+}
+
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Lamp lamp = new Lamp();
+        Button lampButton = new Button(lamp);
+        lampButton.Press(); // Turns the lamp on.
+
+        Fan fan = new Fan();
+        Button fanButton = new Button(fan);
+        fanButton.Press(); // Turns the fan on.
+
+        lampButton.Press(); // Because Lamp implements ISwitchable, we can also turn it off
+        fanButton.Press(); // Same for the fan
+
+    }
+}
+
+
+// Another Example:  Data Access
+
+// Bad:  Direct dependency on a specific database
+// public class CustomerRepository
+// {
+//     private SQLServerDatabase _database; // Tightly coupled
+
+//     public CustomerRepository()
+//     {
+//         _database = new SQLServerDatabase();
+//     }
+
+//     public void SaveCustomer(Customer customer)
+//     {
+//         _database.Save(customer);
+//     }
+// }
+
+// public class SQLServerDatabase
+// {
+//     public void Save(Customer customer) { /* ... */ }
+// }
+
+
+// Good: Use an interface
+
+public interface ICustomerRepository
+{
+    void SaveCustomer(Customer customer);
+}
+
+public class CustomerRepository : ICustomerRepository
+{
+    private IDatabase _database; // Depends on interface
+
+    public CustomerRepository(IDatabase database) // Dependency Injection
+    {
+        _database = database;
+    }
+
+    public void SaveCustomer(Customer customer)
+    {
+        _database.Save(customer);
+    }
+}
+
+public interface IDatabase
+{
+    void Save(Customer customer);
+}
+
+public class SQLServerDatabase : IDatabase
+{
+    public void Save(Customer customer) { /* ... */ }
+}
+
+public class OracleDatabase : IDatabase // Can easily add other database types
+{
+    public void Save(Customer customer) { /* ... */ }
+}
+
+public class Customer { /* ... */ } // Placeholder
+
+
+Explanation of Dependency Inversion Principle (DIP):
+
+High-level modules should not depend on low-level modules. Both should depend on abstractions. 1   In the first example, Button (high-level) depends directly on Lamp (low-level).  In the corrected example, Button depends on the ISwitchable interface (abstraction).   
+1.
+blog.csdn.net
+blog.csdn.net
+
+Abstractions should not depend on details. Details should depend on abstractions.  The ISwitchable interface doesn't care how something is turned on, just that it can be turned on.  Lamp and Fan (details) implement the ISwitchable interface.
+
+Why is this important?
+
+Decoupling: Changes to low-level modules (e.g., switching from Lamp to Fan or from SQLServerDatabase to OracleDatabase) don't require changes to high-level modules (e.g., Button or CustomerRepository).
+Testability: You can easily mock or stub the abstractions for testing. You can test the Button with a mock ISwitchable implementation without needing a real Lamp or Fan.
+Reusability: The high-level modules become more reusable because they are not tied to specific implementations.
+Maintainability: The code is easier to understand and maintain because the dependencies are less complex.
+Key improvements in the corrected code:
+
+Interface ISwitchable: This interface defines the contract for any device that can be switched on or off.
+Button depends on ISwitchable: The Button class now works with any object that implements the ISwitchable interface.
+Lamp and Fan implement ISwitchable: This makes them compatible with the Button class.
+Dependency Injection (in the Data Access example): The CustomerRepository receives the IDatabase implementation through its constructor. This is a common pattern for applying DIP.
+This revised explanation and examples should give you a clearer understanding of the Dependency Inversion Principle and how to apply it in C#.  Remember to consider the benefits of decoupling, testability, and maintainability that DIP provides.

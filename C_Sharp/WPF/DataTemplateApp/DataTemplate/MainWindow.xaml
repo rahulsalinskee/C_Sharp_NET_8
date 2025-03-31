@@ -1,0 +1,69 @@
+﻿<Window
+    x:Class="DataTemplate.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Models="clr-namespace:DataTemplate.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:DataTemplate"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--<Window.DataContext>
+        <Models:Person />
+    </Window.DataContext>-->
+    <Window.Resources>
+        <DataTemplate x:Key="FirstNameKey">
+            <TextBlock
+                Width="Auto"
+                Height="69"
+                Margin="10,30,0,0"
+                Foreground="BlueViolet"
+                Text="{Binding Path=FirstName}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="LastNameKey">
+            <TextBlock
+                Width="Auto"
+                Height="Auto"
+                Margin="50,30,0,0"
+                Foreground="Purple"
+                Text="{Binding Path=LastName}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="ProfessionKey">
+            <TextBlock
+                Width="Auto"
+                Height="Auto"
+                Foreground="OrangeRed"
+                Text="{Binding Path=Profession}" />
+        </DataTemplate>
+    </Window.Resources>
+    <Canvas>
+        <ContentPresenter
+            Canvas.Left="181"
+            Canvas.Top="85"
+            Width="403"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Content="{Binding Path=PersonProperty}"
+            ContentTemplate="{StaticResource ResourceKey=FirstNameKey}" Height="50" />
+        <ContentPresenter
+            Canvas.Left="181"
+            Canvas.Top="217"
+            Width="403"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Content="{Binding Path=PersonProperty}"
+            ContentTemplate="{StaticResource ResourceKey=LastNameKey}" Height="50" />
+        <ContentPresenter
+            Canvas.Left="181"
+            Canvas.Top="314"
+            Width="403"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Content="{Binding Path=PersonProperty}"
+            ContentTemplate="{StaticResource ResourceKey=ProfessionKey}" Height="50" />
+    </Canvas>
+</Window>

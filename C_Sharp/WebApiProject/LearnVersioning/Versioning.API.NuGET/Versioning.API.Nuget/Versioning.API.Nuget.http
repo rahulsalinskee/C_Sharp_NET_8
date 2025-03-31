@@ -1,0 +1,6 @@
+@Versioning.API.Nuget_HostAddress = http://localhost:5198
+
+GET {{Versioning.API.Nuget_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

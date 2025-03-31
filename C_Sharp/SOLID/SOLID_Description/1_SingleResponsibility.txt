@@ -1,0 +1,95 @@
+// BAD EXAMPLE - Violating Single Responsibility Principle
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public decimal Salary { get; set; }
+    
+    // This class has too many responsibilities
+    
+    public void SaveToDatabase()
+    {
+        // Code to save employee to database
+        Console.WriteLine($"Saving {Name} to database");
+    }
+    
+    public void GeneratePayslip()
+    {
+        // Code to generate a payslip
+        Console.WriteLine($"Generating payslip for {Name}");
+    }
+    
+    public void CalculateTax()
+    {
+        // Code to calculate tax
+        Console.WriteLine($"Calculating tax for {Name}");
+    }
+}
+
+// GOOD EXAMPLE - Following Single Responsibility Principle
+// Each class has only one reason to change
+
+// Core Employee entity - only responsible for employee data
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public decimal Salary { get; set; }
+}
+
+// Responsible only for database operations
+public class EmployeeRepository
+{
+    public void Save(Employee employee)
+    {
+        // Code to save employee to database
+        Console.WriteLine($"Saving {employee.Name} to database");
+    }
+    
+    public Employee GetById(int id)
+    {
+        // Code to get employee from database
+        Console.WriteLine($"Getting employee with ID: {id}");
+        return new Employee(); // Simplified for example
+    }
+}
+
+// Responsible only for payslip generation
+public class PayslipGenerator
+{
+    public void Generate(Employee employee)
+    {
+        // Code to generate a payslip
+        Console.WriteLine($"Generating payslip for {employee.Name}");
+    }
+}
+
+// Responsible only for tax calculations
+public class TaxCalculator
+{
+    public decimal Calculate(Employee employee)
+    {
+        // Code to calculate tax
+        var tax = employee.Salary * 0.2m; // Simplified tax calculation
+        Console.WriteLine($"Calculating tax for {employee.Name}: {tax}");
+        return tax;
+    }
+}
+
+// Usage example
+public class Program
+{
+    public static void Main()
+    {
+        var employee = new Employee { Id = 1, Name = "John Doe", Salary = 50000 };
+        
+        var repository = new EmployeeRepository();
+        repository.Save(employee);
+        
+        var payslipGenerator = new PayslipGenerator();
+        payslipGenerator.Generate(employee);
+        
+        var taxCalculator = new TaxCalculator();
+        var tax = taxCalculator.Calculate(employee);
+    }
+}

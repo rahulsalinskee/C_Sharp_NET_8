@@ -1,0 +1,89 @@
+using System;
+using System.IO;
+
+public class SolidFileOperations
+{
+    private string _filePath;
+
+    public SolidFileOperations(string filePath)
+    {
+        _filePath = filePath;
+    }
+
+    // Open the file (creates if it doesn't exist, otherwise opens)
+    public void OpenFile()
+    {
+        try
+        {
+            // Use FileStream for more control (e.g., append mode) if needed.
+            // If you just need simple reading/writing, File.OpenText/File.CreateText might be sufficient.
+
+            using (FileStream fs = new FileStream(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite)) 
+            {
+                // File is now open.  You don't need to do anything with the stream at this point
+                // if you just want to ensure the file exists and is open.
+
+                Console.WriteLine($"File '{_filePath}' opened successfully.");
+
+                // Example: If you wanted to write something immediately upon opening:
+                // using (StreamWriter writer = new StreamWriter(fs))
+                // {
+                //     writer.WriteLine("File opened and this line was written.");
+                // }
+            } // The 'using' statement ensures the FileStream is closed automatically.
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error opening file: {ex.Message}");
+        }
+    }
+
+
+    public void CloseFile()
+    {
+        //  The FileStream is automatically closed and disposed of by the 'using' block 
+        //  in the OpenFile method. You generally *don't* need a separate CloseFile() method
+        //  when using 'using' statements.  This is a key part of proper resource management.
+
+        //  If you *did* have a FileStream that you were managing manually (without using),
+        //  then you would close it like this:
+
+        //  Example (not recommended - use 'using' instead):
+        // FileStream manuallyManagedStream = new FileStream(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        // ... use the stream ...
+        // manuallyManagedStream.Close(); // Or manuallyManagedStream.Dispose();
+
+        //  However, with 'using', the following CloseFile() would be redundant and is generally not necessary:
+        Console.WriteLine($"File '{_filePath}' (implicitly) closed."); // Informative message
+    }
+
+
+    public static void Main(string[] args)
+    {
+        string filePath = "my_solid_file.txt"; // Replace with your desired file path.
+        SolidFileOperations fileOps = new SolidFileOperations(filePath);
+
+        fileOps.OpenFile();
+
+        // ... perform other operations on the file if needed ...
+
+        fileOps.CloseFile();  // This is technically redundant because of the 'using' in OpenFile, but included for demonstration.
+        Console.WriteLine("Done.");
+    }
+}
+
+Explanation of OCP and how this code applies it:
+
+Open for Extension:  The IShape interface allows us to easily add new shape types (like Triangle) without modifying existing classes (Rectangle, Circle, AreaCalculator).  We simply create a new class that implements the IShape interface.
+
+Closed for Modification: The AreaCalculator class doesn't need to be changed when we add a new shape.  It works with any object that implements the IShape interface.  This is crucial for maintainability and reduces the risk of introducing bugs.
+
+Key Principles Demonstrated:
+
+Abstraction: The IShape interface provides an abstraction for the concept of a "shape." This abstraction is what allows us to treat different shapes uniformly.
+Polymorphism: The CalculateTotalArea method can work with objects of different classes (Rectangle, Circle, Triangle) through the common IShape interface. This is polymorphism in action.
+Why the "Bad Example" is Bad:
+
+In the RectangleBad and CircleBad example, if you wanted to add a Triangle, you'd have to modify the AreaCalculator (or whatever class was using the shapes) to handle the new type. 
+This is a violation of OCP.  Every time you add a new shape, you'd have to change existing code, making it brittle and prone to errors.  The OCP-compliant version avoids this by using abstraction.

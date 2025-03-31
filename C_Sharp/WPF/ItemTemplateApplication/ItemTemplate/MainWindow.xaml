@@ -1,0 +1,46 @@
+﻿<Window
+    x:Class="ItemTemplate.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ItemTemplate"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <ListBox
+            x:Name="Products"
+            Margin="10"
+            ItemsSource="{Binding Path=ProductList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Image
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,10,0"
+                            Source="{Binding Path=ImagePath}" />
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="Medium"
+                                Text="{Binding Path=ProductName}" />
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="Medium"
+                                Text="{Binding Path=Price, StringFormat=Price: ${0}}" />
+                            <TextBlock
+                                MaxWidth="300"
+                                FontSize="14"
+                                FontWeight="Medium"
+                                Text="{Binding Path=Description}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
