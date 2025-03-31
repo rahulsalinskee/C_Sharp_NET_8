@@ -28,6 +28,8 @@ builder.Services.AddDbContext<EMSDataBaseContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IPersonService, PersonServiceImplementation>();
+builder.Services.AddScoped<IDepartmentService, DepartmentServiceImplementation>();
+builder.Services.AddScoped<IPositionService, PositionServiceImplementation>();
 builder.Services.AddScoped<ResponseDto>();
 
 builder.Services.AddEndpointsApiExplorer();
