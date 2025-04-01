@@ -127,8 +127,6 @@ namespace EMS.API.Repository.Implementations
 
             if (person is not null)
             {
-                var personDto = this._mapper.Map<PersonDto>(source: person);
-
                 var updatedPerson = personUpdateRequestDto.ToUpdatePersonModelFromPersonDtoExtension(id: id);
 
                 this._emsDataBaseContext.Entry(person).State = EntityState.Detached;
