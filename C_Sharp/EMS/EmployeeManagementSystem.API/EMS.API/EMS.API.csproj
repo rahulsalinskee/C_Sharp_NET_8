@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="GeneratedLogs\" />
-    <Folder Include="ServerSideValidation\" />
   </ItemGroup>
 
 </Project>
