@@ -99,7 +99,14 @@ namespace EMS.API.Repository.Implementations
 
         public async Task<ResponseDto> GetPersonsAsync()
         {
-            var persons = await this._emsDataBaseContext.Persons.ToListAsync();
+            var persons = await this._emsDataBaseContext.Persons.Include(person => person.Salary).Include(person => person.Position).ThenInclude(person => person.Department).Select(person => new PersonAll()
+            {
+                ID = person.ID,
+                Name = person.FirstName,
+                PositionName = person.Position.Name,
+                Salary = person.Salary.Amount,
+                DepartmentName = person.Position.Department.Name,
+            }).ToListAsync();
 
             var personsDto = this._mapper.Map<IEnumerable<PersonDto>>(source: persons);
 
