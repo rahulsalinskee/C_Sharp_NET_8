@@ -23,11 +23,23 @@ namespace EMS.API.Mapper
                 .ForMember(destination => destination.PersonDetail, option => option.MapFrom(source => source.PersonDetail))
                 .ForMember(destination => destination.FirstName, option => option.Condition(source => source.FirstName is not null))
                 .ForMember(destination => destination.LastName, option => option.Condition(source => source.LastName is not null))
-                .ForMember(destination => destination.Age, option => option.Condition(source => source.Age != null))
+                .ForMember(destination => destination.Age, option => option.Condition(source => source?.Age is not null))
                 .ForMember(destination => destination.Email, option => option.Condition(source => source.Email is not null))
                 .ForMember(destination => destination.Address, option => option.Condition(source => source.Address is not null))
-                .ForMember(destination => destination.PositionID, option => option.Condition(source => source.PositionID != null))
-                .ForMember(destination => destination.SalaryID, option => option.Condition(source => source.SalaryID != null));
+                .ForMember(destination => destination.PositionID, option => option.Condition(source => source?.PositionID is not null))
+                .ForMember(destination => destination.SalaryID, option => option.Condition(source => source?.SalaryID is not null));
+
+
+            // Add mapping from PersonAll to PersonDto
+            CreateMap<PersonAll, PersonDto>()
+                .ForMember(destination => destination.FirstName, option => option.MapFrom(source => source.Name))
+                .ForMember(destination => destination.LastName, option => option.Ignore())
+                .ForMember(destination => destination.Age, option => option.Ignore())
+                .ForMember(destination => destination.Email, option => option.Ignore())
+                .ForMember(destination => destination.Address, option => option.Ignore())
+                .ForMember(destination => destination.PositionID, option => option.Ignore())
+                .ForMember(destination => destination.SalaryID, option => option.Ignore())
+                .ForMember(destination => destination.PersonDetail, option => option.Ignore());
 
             // PersonDetail mappings
             CreateMap<PersonDetail, PersonDetailDto>();

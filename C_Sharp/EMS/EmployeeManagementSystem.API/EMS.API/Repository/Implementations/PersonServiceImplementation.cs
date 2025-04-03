@@ -130,7 +130,7 @@ namespace EMS.API.Repository.Implementations
 
         public async Task<ResponseDto> UpdatePersonByIdAsync(int id, DTOs.PersonDTOs.PersonUpdateRequestDto personUpdateRequestDto)
         {
-            var person = this._emsDataBaseContext.Persons.FirstOrDefaultAsync(person => person.ID == id);
+            var person = await this._emsDataBaseContext.Persons.FirstOrDefaultAsync(person => person.ID == id);
 
             if (person is not null)
             {
