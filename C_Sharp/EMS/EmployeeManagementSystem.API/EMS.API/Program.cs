@@ -10,7 +10,7 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 
-var logger = new LoggerConfiguration().WriteTo.File(path: $"GeneratedLogs/EMS_Log_{DateTimeOffset.UtcNow}_.txt", rollingInterval: RollingInterval.Minute).MinimumLevel.Information().CreateLogger();
+var logger = new LoggerConfiguration().WriteTo.File(path: $"GeneratedLogs/EMS_Log_{DateTime.UtcNow}.txt", rollingInterval: RollingInterval.Minute).MinimumLevel.Information().CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger: logger);
 

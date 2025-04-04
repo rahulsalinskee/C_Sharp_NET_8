@@ -136,8 +136,8 @@ namespace EMS.API.Repository.Implementations
             {
                 var updatedPerson = personUpdateRequestDto.ToUpdatePersonModelFromPersonDtoExtension(id: id);
 
-                this._emsDataBaseContext.Entry(person).State = EntityState.Detached;
-                this._emsDataBaseContext.Attach(updatedPerson);
+                //this._emsDataBaseContext.Entry(person).State = EntityState.Detached;
+                //this._emsDataBaseContext.Attach(updatedPerson);
                 this._emsDataBaseContext.Entry(updatedPerson).State = EntityState.Modified;
 
                 await this._emsDataBaseContext.SaveChangesAsync();

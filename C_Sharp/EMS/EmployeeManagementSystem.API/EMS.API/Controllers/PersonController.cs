@@ -18,14 +18,15 @@ namespace EMS.API.Controllers
         }
 
         [HttpGet]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
         [ValidateModel]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllPersons()
         {
             var persons = await this._personService.GetPersonsAsync();
 
             if (persons is not null && persons.IsSuccess)
             {
+                throw new Exception("Something went wrong!");
                 return Ok(persons);
             }
             else

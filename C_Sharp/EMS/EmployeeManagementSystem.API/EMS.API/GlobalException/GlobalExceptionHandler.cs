@@ -25,6 +25,8 @@ namespace EMS.API.GlobalException
             {
                 var id = Guid.NewGuid();
 
+                this._logger.LogInformation(exception, $"{id} - {exception.Message}");
+
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 httpContext.Response.ContentType = "application/json";
 
@@ -38,8 +40,14 @@ namespace EMS.API.GlobalException
                     InnerException = exception?.InnerException?.Message ?? string.Empty,
                 };
 
-                this._logger.LogError(exception, $"Error Id: {id} - {errorDto}");
-                await httpContext.Response.WriteAsJsonAsync(JsonSerializer.Serialize(errorDto));
+                var error = new
+                {
+                    ID = id,
+                    Message = "Something Bad happened!",
+                };
+
+                //this._logger.LogError(exception, $"Error Id: {id} - {errorDto}");
+                await httpContext.Response.WriteAsJsonAsync(error);
             }
         }
     }
