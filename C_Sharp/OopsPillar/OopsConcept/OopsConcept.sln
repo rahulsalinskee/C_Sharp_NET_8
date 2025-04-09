@@ -99,6 +99,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EntityFrameworkCoreRelation
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCoreRelationship", "..\..\EntityFrameworkCoreRelationships\EntityFrameworkCoreRelationship\EntityFrameworkCoreRelationship.csproj", "{DFEF7A93-6D9C-49A6-B2DE-977701F4920C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmployeeManagementSystem.Authentication", "EmployeeManagementSystem.Authentication", "{E157D80B-0068-426A-BA98-B07D302EE154}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FacebookGoogleLogin", "FacebookGoogleLogin", "{D43790E0-5E98-4815-861E-F28F77DD8F69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -238,6 +242,8 @@ Global
 		{5C7CFC6E-1250-41AA-8C23-6CB2CA828006} = {5AA97186-08B8-4449-A1BF-FBC8B7D4A4B9}
 		{328238A4-87B6-4B67-90F7-864517E45E0F} = {19948775-C045-4B75-9622-1E04A4C30121}
 		{DFEF7A93-6D9C-49A6-B2DE-977701F4920C} = {385FC587-8048-44B1-84AF-F3653261B014}
+		{E157D80B-0068-426A-BA98-B07D302EE154} = {5AA97186-08B8-4449-A1BF-FBC8B7D4A4B9}
+		{D43790E0-5E98-4815-861E-F28F77DD8F69} = {E157D80B-0068-426A-BA98-B07D302EE154}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC68D4C1-AC02-44C3-BEC6-F080BABFCD3D}

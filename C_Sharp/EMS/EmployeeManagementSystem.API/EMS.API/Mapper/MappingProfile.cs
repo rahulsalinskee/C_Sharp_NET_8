@@ -54,8 +54,8 @@ namespace EMS.API.Mapper
             CreateMap<Position, PositionDto>();
             CreateMap<PositionCreateRequestDto, Position>();
             CreateMap<PositionUpdateRequestDto, Position>()
-               .ForMember(destination => destination.Name, option => option.Condition(source => source.Name is not null))
-               .ForMember(destination => destination.DepartmentId, option => option.Condition(src => src.DepartmentId != null));
+                .ForMember(destination => destination.Name, option => option.Condition(source => source.Name is not null))
+                .ForMember(destination => destination.DepartmentId, option => option.Condition(src => src.DepartmentId != null));
 
             // Salary mappings
             CreateMap<Salary, SalaryDto>();
