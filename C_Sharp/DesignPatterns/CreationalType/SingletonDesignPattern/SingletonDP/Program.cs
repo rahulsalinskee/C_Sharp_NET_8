@@ -30,4 +30,18 @@ whySealedChild1.DisplayClassName("Display Class Name - Class 1");
 WhySealedBase.WhySealedChild whySealedChild2 = new();
 whySealedChild2.DisplayClassName("Display Class Name - Class 2");
 Console.WriteLine("----------------- Why Sealed Base End ------------------");
+
+
+Console.WriteLine("----------------- Thread Safety Start ------------------");
+Parallel.Invoke(() =>
+{
+    ThreadSafetySingleton threadSafetySingletonObject1 = ThreadSafetySingleton.GetThreadSafeInstanceUsingStaticConstructor;
+    threadSafetySingletonObject1.DisplayName("Display Name - Thread 1");
+},
+() =>
+{
+    ThreadSafetySingleton threadSafetySingletonObject2 = ThreadSafetySingleton.GetThreadSafeInstanceUsingStaticConstructor;
+    threadSafetySingletonObject2.DisplayName("Display Name - Thread 2");
+});
+Console.WriteLine("----------------- Thread Safety End ------------------");
 Console.ReadLine();
