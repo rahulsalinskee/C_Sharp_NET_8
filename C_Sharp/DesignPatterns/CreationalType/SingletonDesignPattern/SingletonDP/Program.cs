@@ -11,7 +11,7 @@ student.PrintDetails("Print Details - Detail 3");
 student.PrintDetails("Print Details - Detail 4");
 Console.WriteLine("----------------- Without Singleton End ------------------");
 
-
+Console.WriteLine();
 
 Console.WriteLine("----------------- With Singleton Start ------------------");
 WithSingleton teacher = WithSingleton.GetInstance;
@@ -21,27 +21,35 @@ WithSingleton doctor = WithSingleton.GetInstance;
 doctor.DisplayName("Display Name - Name 2");
 Console.WriteLine("----------------- With Singleton End ------------------");
 
+Console.WriteLine();
 
+Console.WriteLine("----------------- Why Singleton is Sealed Base Start ------------------");
+WhySealedBase.WhySealedChild? whySealedChild1 = new();
+whySealedChild1?.DisplayClassName("Display Class Name - Class 1");
 
-Console.WriteLine("----------------- Why Sealed Base Start ------------------");
-WhySealedBase.WhySealedChild whySealedChild1 = new();
-whySealedChild1.DisplayClassName("Display Class Name - Class 1");
+WhySealedBase.WhySealedChild? whySealedChild2 = new();
+whySealedChild2?.DisplayClassName("Display Class Name - Class 2");
+Console.WriteLine("----------------- Why Singleton is Sealed Base End ------------------");
 
-WhySealedBase.WhySealedChild whySealedChild2 = new();
-whySealedChild2.DisplayClassName("Display Class Name - Class 2");
-Console.WriteLine("----------------- Why Sealed Base End ------------------");
+Console.WriteLine();
 
-
-Console.WriteLine("----------------- Thread Safety Start ------------------");
+Console.WriteLine("----------------- Thread Safe Singleton Start ------------------");
 Parallel.Invoke(() =>
 {
-    ThreadSafetySingleton threadSafetySingletonObject1 = ThreadSafetySingleton.GetThreadSafeInstanceUsingStaticConstructor;
-    threadSafetySingletonObject1.DisplayName("Display Name - Thread 1");
+    ThreadSafeSingleton threadSafeSingletonObject1 = ThreadSafeSingleton.GetThreadSafeInstanceUsingStaticConstructor;
+    threadSafeSingletonObject1.DisplayName("Display Name - Thread 1");
 },
 () =>
 {
-    ThreadSafetySingleton threadSafetySingletonObject2 = ThreadSafetySingleton.GetThreadSafeInstanceUsingStaticConstructor;
-    threadSafetySingletonObject2.DisplayName("Display Name - Thread 2");
+    ThreadSafeSingleton threadSafeSingletonObject2 = ThreadSafeSingleton.GetThreadSafeInstanceUsingStaticConstructor;
+    threadSafeSingletonObject2.DisplayName("Display Name - Thread 2");
 });
-Console.WriteLine("----------------- Thread Safety End ------------------");
+
+ThreadSafeSingleton threadSafeSingletonInstance1 = ThreadSafeSingleton.GetThreadSafeInstanceUsingStaticConstructor;
+threadSafeSingletonInstance1.DisplayName("Thread Safe Singleton Instance 1");
+
+ThreadSafeSingleton threadSafeSingletonInstance2 = ThreadSafeSingleton.GetThreadSafeInstanceUsingStaticConstructor;
+threadSafeSingletonInstance2.DisplayName("Thread Safe Singleton Instance 2");
+Console.WriteLine("----------------- Thread Safe Singleton End ------------------");
+Console.WriteLine();
 Console.ReadLine();

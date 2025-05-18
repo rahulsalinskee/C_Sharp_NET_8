@@ -11,7 +11,7 @@ namespace SingletonDP
     public class WhySealedBase
     {
         private static int _count = 0;
-        private static WhySealedBase _instance = null;
+        private static WhySealedBase? _instance = null;
 
         public WhySealedBase GetInstance 
         { 

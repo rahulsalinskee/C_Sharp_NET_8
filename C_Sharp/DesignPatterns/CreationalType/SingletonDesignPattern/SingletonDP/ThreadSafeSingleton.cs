@@ -6,31 +6,35 @@ using System.Threading.Tasks;
 
 namespace SingletonDP
 {
-    public class ThreadSafetySingleton
+    public class ThreadSafeSingleton
     {
         private static int _count = 0;
-        private static ThreadSafetySingleton _instance = null;
 
         #region Achieving Thread Safety With Using Lock
+        //private static ThreadSafeSingleton _instance = null;
+
         /// <summary>
         /// Achieving Thread Safety with using lock
         /// </summary>
-        private static readonly object _lockObject = new();
+        //private static readonly object _lockObject = new();
 
-        public static ThreadSafetySingleton GetThreadSafeInstanceUsingLockObject
-        {
-            get
-            {
-                lock (_lockObject)
-                {
-                    if (_instance is null)
-                    {
-                        _instance = new ThreadSafetySingleton();
-                    }
-                }
-                return _instance;
-            }
-        }
+        //public static ThreadSafeSingleton GetThreadSafeInstanceUsingLockObject
+        //{
+        //    get
+        //    {
+        //        if (_instance is null)
+        //        {
+        //            lock (_lockObject)
+        //            {
+        //                if (_instance is null)
+        //                {
+        //                    _instance = new ThreadSafeSingleton();
+        //                }
+        //            } 
+        //        }
+        //        return _instance;
+        //    }
+        //}
         #endregion
 
         #region Achieving Thread Safety using Static Constructor Initialization (Without using lock)
@@ -38,10 +42,9 @@ namespace SingletonDP
         /// Achieving Thread Safety using Static Constructor Initialization (Without using lock)
         /// Static constructors are thread-safe
         /// </summary>
-        private static readonly ThreadSafetySingleton _threadSafeInstance = new(); 
+        private static readonly ThreadSafeSingleton _threadSafeInstance = new();
 
-
-        public static ThreadSafetySingleton GetThreadSafeInstanceUsingStaticConstructor
+        public static ThreadSafeSingleton GetThreadSafeInstanceUsingStaticConstructor
         {
             get
             {
@@ -53,7 +56,7 @@ namespace SingletonDP
         /// <summary>
         /// Constructor
         /// </summary>
-        private ThreadSafetySingleton()
+        private ThreadSafeSingleton()
         {
             _count++;
             Console.WriteLine($"Number of times constructor is called: {_count}");
