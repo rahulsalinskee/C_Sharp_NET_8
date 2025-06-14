@@ -9,4 +9,6 @@ view.ClickIncreaseQuantityButton();
 
 viewModel.Quantity = 5;
 
+view.Dispose();
+
 Console.ReadKey();
