@@ -134,6 +134,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObserverDP", "..\..\DesignPatterns\BehavioralPattern\ObserverDesignPattern\ObserverDP\ObserverDP.csproj", "{12121C2C-8FC3-4C88-9F32-37E51A4EEC71}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InventoryManagementSystem", "InventoryManagementSystem", "{F71294B1-CBBD-4781-BB6E-1C8140177AD8}"
+	ProjectSection(SolutionItems) = preProject
+		Reference.txt = Reference.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IMS.Applications", "IMS.Applications", "{38C9E562-52AB-4CD3-BC52-F4F78EED5725}"
 EndProject
