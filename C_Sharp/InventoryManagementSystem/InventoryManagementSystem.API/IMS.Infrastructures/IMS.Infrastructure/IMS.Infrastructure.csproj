@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\IMS.Applications\IMS.Application\IMS.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataAccess\" />
+    <Folder Include="DependencyInjections\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
